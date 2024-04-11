@@ -20,6 +20,10 @@ jobs:
         - name: Builda o projeto
           run: dotnet build MockAPI/MockAPI.sln
           
-        - name: Verificação do status do build
-          if: ${{ needs.build.result != 'success' }}
-          run: exit 1
+  push:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verificação do status do build
+        if: ${{ needs.build.result != 'success' }}
+        run: exit 1
