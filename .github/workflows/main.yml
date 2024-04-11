@@ -17,5 +17,9 @@ jobs:
         - name: Restaura as dependências
           run: dotnet restore
 
+        - name: Listar conteúdo do diretório
+          run: ls -R
+
+
         - name: Builda o projeto
           run: dotnet build
