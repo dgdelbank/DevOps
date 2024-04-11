@@ -8,6 +8,8 @@ jobs:
     steps:
         - name: Realiza checkout
           uses: actions/checkout@v4.1.2
+          with:
+             path: '/home/runner/Documents/GitHub/DevOps'
           
         - name: Configura ambiente
           uses: actions/setup-dotnet@v1
@@ -15,7 +17,7 @@ jobs:
             dotnet-version: '8.0.x'
 
         - name: Restaura as dependências
-          run: dotnet restore MockAPI.sln
+          run: dotnet restore 
 
         - name: Builda o projeto
           run: dotnet build
