@@ -25,11 +25,8 @@ jobs:
       - name: Builda o projeto
         run: dotnet build MockAPI/MockAPI.sln
 
-      - name: Verifica o status do build
-        run: echo "Verificando Build..."
+      - name: Reverte o commit se o build falhar
         if: ${{ failure() }}
-        # Reverte o commit se o build falhar
-      - name: Reverte o commit
         working-directory: ./MockAPI
         run: git revert --no-edit HEAD
         env:
