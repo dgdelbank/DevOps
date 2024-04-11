@@ -19,11 +19,12 @@ jobs:
 
         - name: Builda o projeto
           run: dotnet build MockAPI/MockAPI.sln
+
+        - name: Verifica o status do build
+          if: ${{ failure() }}
+          run: git revert --no-edit HEAD
+          working-directory: ./MockAPI
+          env:
+            GITHUB_TOKEN: ${{ secrets.HUB_TOKEN }}
           
-  push:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Verificação do status do build
-        if: ${{ needs.build.result != 'success' }}
-        run: exit 1
+
