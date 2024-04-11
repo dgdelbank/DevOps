@@ -6,44 +6,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-        - name: Realiza checkout
-          uses: actions/checkout@v4.1.2
+      - name: Configura usuário Git
+        run: |
+          git config --global user.email "${{ secrets.HUBEMAIL }}"
+          git config --global user.name "dgdelbank"
+    
+      - name: Realiza checkout
+        uses: actions/checkout@v4.1.2
           
-        - name: Configura ambiente
-          uses: actions/setup-dotnet@v1
-          with: 
-            dotnet-version: '8.0.x'
+      - name: Configura ambiente
+        uses: actions/setup-dotnet@v1
+        with: 
+          dotnet-version: '8.0.x'
 
-        - name: Restaura as dependências
-          run: dotnet restore MockAPI/MockAPI.sln
+      - name: Restaura as dependências
+        run: dotnet restore MockAPI/MockAPI.sln
 
-        - name: Builda o projeto
-          run: dotnet build MockAPI/MockAPI.sln
+      - name: Builda o projeto
+        run: dotnet build MockAPI/MockAPI.sln
 
-        - name: Verifica o status do build
-          if: ${{ failure() }}
-          run: echo Casa caiu
-          
-        - name: Reverte o commit
-          uses: actions/github-script@v5
-          with:
-            script: |
-              github = require('@actions/github');
-              const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
-              context = github.context;
-              
-              octokit.repos.createCommitComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                commit_sha: context.sha,
-                body: 'Build falhou, revertendo o commit.'
-              });
-  
-              octokit.git.revertCommit({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                commit_sha: context.sha
-              });
-
-          
-
+      - name: Verifica o status do build
+        run: echo "Verificando Build..."
+        if: ${{ failure() }}
+        # Reverte o commit se o build falhar
+      - name: Reverte o commit
+        run: git revert --no-edit HEAD
+        working-directory: ./MockAPI
+        env:
+          GITHUB_TOKEN: ${{ secrets.HUB_TOKEN }}
