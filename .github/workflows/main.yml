@@ -31,6 +31,6 @@ jobs:
         # Reverte o commit se o build falhar
       - name: Reverte o commit
         working-directory: ./MockAPI
-        run: git reset --hard HEAD~1
+        run: git revert --no-edit HEAD
         env:
           GITHUB_TOKEN: ${{ secrets.HUB_TOKEN }}
