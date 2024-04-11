@@ -31,7 +31,10 @@ namespace SimpleMockApi
                                 new { Id = 2, Name = "Item 2" },
                                 new { Id = 3, Name = "Item 3" }
                             };
-tion/json";
+
+                            var jsonData = JsonConvert.SerializeObject(data);
+                            context.Response.StatusCode = (int)HttpStatusCode.OK;
+                            context.Response.ContentType = "application/json";
                             await context.Response.WriteAsync(jsonData);
                         });
                     });
