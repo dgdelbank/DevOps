@@ -22,7 +22,6 @@ jobs:
 
         - name: Verifica o status do build
           if: ${{ failure() }}
-          
         - name: Reverte o commit
           uses: actions/github-script@v5
           with:
