@@ -22,9 +22,27 @@ jobs:
 
         - name: Verifica o status do build
           if: ${{ failure() }}
-          run: git revert --no-edit HEAD
-          working-directory: ./MockAPI
-          env:
-            GITHUB_TOKEN: ${{ secrets.HUB_TOKEN }}
+          
+        - name: Reverte o commit
+          uses: actions/github-script@v5
+          with:
+            script: |
+              const github = require('@actions/github');
+              const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+              const context = github.context;
+              
+              octokit.repos.createCommitComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                commit_sha: context.sha,
+                body: 'Build falhou, revertendo o commit.'
+              });
+  
+              octokit.git.revertCommit({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                commit_sha: context.sha
+              });
+
           
 
