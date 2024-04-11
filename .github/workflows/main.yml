@@ -28,6 +28,8 @@ jobs:
       - name: Reverte o commit se o build falhar
         if: ${{ failure() }}
         working-directory: ./MockAPI
-        run: git revert --no-edit HEAD
+        run: |
+          git revert --no-edit HEAD
+          git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.HUB_TOKEN }}
