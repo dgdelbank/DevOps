@@ -23,7 +23,7 @@ namespace SimpleMockApi
 
                     app.UseEndpoints(endpoints =>
                     {
-                        endpoints.MapGet("/api/data", async context =>
+                        endpoints.Map async context =>
                         {
                             var data = new List<object>
                             {
