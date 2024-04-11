@@ -25,7 +25,7 @@ namespace SimpleMockApi
                     {
                         endpoints.MapGet("/api/data", async context =>
                         {
-                            var data = new List<object>
+                            var data = new Lisect>
                             {
                                 new { Id = 5, Name = "Item 1" },
                                 new { Id = 2, Name = "Item 2" },
