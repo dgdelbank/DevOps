@@ -1,0 +1,11 @@
+name: GitHub Actions
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: Realiza checkout
+          uses: actions/checkout@v4.1.2
+        
