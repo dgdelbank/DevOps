@@ -1,2 +1,0 @@
-# DevOps
- Made for training
