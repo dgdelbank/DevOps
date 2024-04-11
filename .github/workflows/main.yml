@@ -30,7 +30,7 @@ jobs:
             script: |
               github = require('@actions/github');
               const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
-              const context = github.context;
+              context = github.context;
               
               octokit.repos.createCommitComment({
                 owner: context.repo.owner,
