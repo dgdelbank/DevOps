@@ -7,6 +7,11 @@ using System.Net;
 
 namespace SimpleMockApi
 {
+    public class Item
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
     public class Program
     {
         public static async Task Main(string[] args)
@@ -25,11 +30,11 @@ namespace SimpleMockApi
                     {
                         endpoints.MapGet("/api/data", async context =>
                         {
-                            var data = new List<object>
+                            var data = new List<Item>
                             {
-                                new { Id = 1, Name = "Item 1" },
-                                new { Id = 2, Name = "Item 2" },
-                                new { Id = 3, Name = "Item 3" }
+                                new Item { Id = 1, Name = "Item 1" },
+                                new Item { Id = 2, Name = "Item 2" },
+                                new Item { Id = 3, Name = "Item 3" }
                             };
 
                             var jsonData = JsonConvert.SerializeObject(data);

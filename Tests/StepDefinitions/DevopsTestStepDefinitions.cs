@@ -1,5 +1,4 @@
-using System;
-using TechTalk.SpecFlow;
+using NUnit.Framework;
 using Tests.Support;
 
 namespace Tests.StepDefinitions
@@ -8,6 +7,7 @@ namespace Tests.StepDefinitions
     public class DevopsTestStepDefinitions
     {
         private readonly TestPage? page;
+        private dynamic? item;
 
         public DevopsTestStepDefinitions()
         {
@@ -18,19 +18,19 @@ namespace Tests.StepDefinitions
         public void GivenAccessToDataEndpoint()
         {
             page.AccessEndpoint();
-            page.GetItem();
+            page.GetResponse();
         }
 
         [When(@"Get item with id = (.*)")]
         public void WhenGetItemWithId(int p0)
         {
-            throw new PendingStepException();
+            item = page.GetItem(p0);
         }
 
         [Then(@"Item has to be named '([^']*)'")]
         public void ThenItemHasToBeNamed(string p0)
         {
-            throw new PendingStepException();
+            Assert.IsTrue(page.AssertItemHasName(item, p0));
         }
     }
 }
