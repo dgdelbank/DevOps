@@ -14,14 +14,15 @@ jobs:
         with: 
           dotnet-version: '6.0.x'
 
-      - name: Restaura as dependências
-        run: dotnet restore MockAPI/MockAPI.sln
+      - name: Restaura as dependências e builda o projeto
+        run: |
+          dotnet restore MockAPI/MockAPI.sln
+          dotnet build MockAPI/MockAPI.sln
 
-      - name: Builda o projeto
-        run: dotnet build MockAPI/MockAPI.sln
+      - name: Roda os testes
+        run: dotnet test Tests/Tests.csproj --no-build
 
       - name: Roda a API
         run: |
-          dotnet test Tests/Tests.csproj &
           dotnet run --project MockAPI/MockAPI.csproj &
           pkill -f "dotnet run --project MockAPI/MockAPI.csproj"
