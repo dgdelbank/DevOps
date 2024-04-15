@@ -26,6 +26,9 @@ jobs:
           dotnet run --project MockAPI/MockAPI.csproj 
           continue-on-error: false
 
+      - name: Mata a API
+        run: pkill -f "dotnet run --project MockAPI/MockAPI.csproj"
+
       - name: Executa testes de integração
         run: dotnet test
 
