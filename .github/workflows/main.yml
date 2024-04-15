@@ -28,10 +28,11 @@ jobs:
           
       - name: Verifica resultados dos testes
         run: |
-          test_result=$(dotnet test Tests/Tests.csproj | grep "Failed:")
-          if [[ -n "$test_result" ]]; then
+          dotnet test Tests/Tests.csproj
+          test_result=$?
+          if [ $test_result -ne 0 ]; then
             echo "Testes falharam."
             exit 1
           else
-            echo "Testes realizados com sucesso."
+            echo "Testes passaram com sucesso."
           fi
