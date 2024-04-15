@@ -24,11 +24,10 @@ jobs:
         run: |
           dotnet test Tests/Tests.csproj &
           dotnet run --project MockAPI/MockAPI.csproj 
-      - name: Espera a API estar pronta
-        run: sleep 10s 
+          continue-on-error: false
 
       - name: Executa testes de integração
         run: dotnet test
 
-      - name: Derruba a API
+      - name: Mata a API
         run: pkill -f "dotnet run --project MockAPI/MockAPI.csproj"
