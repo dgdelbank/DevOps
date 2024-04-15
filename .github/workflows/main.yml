@@ -12,7 +12,7 @@ jobs:
       - name: Configura ambiente
         uses: actions/setup-dotnet@v1
         with: 
-          dotnet-version: '8.0.x'
+          dotnet-version: '6.0.x'
 
       - name: Restaura as dependências
         run: dotnet restore MockAPI/MockAPI.sln
