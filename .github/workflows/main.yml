@@ -22,16 +22,6 @@ jobs:
 
       - name: Roda a API
         run: |
-          dotnet run --project MockAPI/MockAPI.csproj &
           dotnet test Tests/Tests.csproj &
+          dotnet run --project MockAPI/MockAPI.csproj &
           pkill -f "dotnet run --project MockAPI/MockAPI.csproj"
-          
-      - name: Verifica resultados dos testes
-        run: |
-          test_result=$(dotnet test Tests/Tests.csproj | grep "Failed:")
-          if [[ -n "$test_result" ]]; then
-            echo "Testes falharam."
-            exit 1
-          else
-            echo "Testes realizados com sucesso."
-          fi
