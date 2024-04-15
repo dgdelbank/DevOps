@@ -14,15 +14,24 @@ jobs:
         with: 
           dotnet-version: '6.0.x'
 
-      - name: Restaura as dependências e builda o projeto
-        run: |
-          dotnet restore MockAPI/MockAPI.sln
-          dotnet build MockAPI/MockAPI.sln
+      - name: Restaura as dependências
+        run: dotnet restore MockAPI/MockAPI.sln
 
-      - name: Roda os testes
-        run: dotnet test Tests/Tests.csproj --no-build
+      - name: Builda o projeto
+        run: dotnet build MockAPI/MockAPI.sln
 
       - name: Roda a API
         run: |
           dotnet run --project MockAPI/MockAPI.csproj &
+          dotnet test Tests/Tests.csproj &
           pkill -f "dotnet run --project MockAPI/MockAPI.csproj"
+          
+      - name: Verifica resultados dos testes
+        run: |
+          test_result=$(dotnet test Tests/Tests.csproj | grep "Failed:")
+          if [[ -n "$test_result" ]]; then
+            echo "Testes falharam."
+            exit 1
+          else
+            echo "Testes realizados com sucesso."
+          fi
