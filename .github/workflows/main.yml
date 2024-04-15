@@ -21,7 +21,7 @@ jobs:
         run: dotnet build MockAPI/MockAPI.sln
 
       - name: Roda a API
-        run: dotnet run
+        run: dotnet run --project MockAPI/MockAPI.csproj
 
       - name: Executa testes de integração
         run: dotnet test
