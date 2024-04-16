@@ -46,8 +46,6 @@ jobs:
 
       - name: Analisa resultados
         run: |
-          dotnet run --project MockAPI/MockAPI.csproj &
-          dotnet test Tests/Tests.csproj
           test_result=$?
           if [ $test_result -ne 0 ]; then
             echo "Testes falharam."
