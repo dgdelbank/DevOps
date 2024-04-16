@@ -26,7 +26,7 @@ jobs:
           name: build
           path: MockAPI
           
-  test:
+  tests:
     runs-on: ubuntu-latest
     needs: build
     steps:
