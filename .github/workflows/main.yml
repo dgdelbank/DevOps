@@ -19,15 +19,28 @@ jobs:
 
       - name: Builda o projeto
         run: dotnet build MockAPI/MockAPI.sln
+
+      - name: Salva artefatos
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: MockAPI
           
+  tests:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Realiza checkout
+        uses: actions/checkout@v4.1.2
+
+      - name: Baixa artefatos
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: MockAPI
+    
       - name: Realiza testes automatizados
         run: |
           dotnet run --project MockAPI/MockAPI.csproj &
           dotnet test Tests/Tests.csproj
-          test_result=$?
-          if [ $test_result -ne 0 ]; then
-            echo "Testes falharam."
-            exit 1
-          else
-            echo "Testes passaram com sucesso."
-          fi
+
