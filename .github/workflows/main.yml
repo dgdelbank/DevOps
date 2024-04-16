@@ -26,7 +26,7 @@ jobs:
           name: build
           path: MockAPI
           
-  test:
+  tests:
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -43,6 +43,9 @@ jobs:
         run: |
           dotnet run --project MockAPI/MockAPI.csproj &
           dotnet test Tests/Tests.csproj
+
+      - name: Analisa resultados
+        run: |
           test_result=$?
           if [ $test_result -ne 0 ]; then
             echo "Testes falharam."
@@ -50,3 +53,4 @@ jobs:
           else
             echo "Testes passaram com sucesso."
           fi
+
