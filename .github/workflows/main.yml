@@ -19,10 +19,26 @@ jobs:
 
       - name: Builda o projeto
         run: dotnet build MockAPI/MockAPI.sln
+
+      - name: Salva artefatos
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: MockAPI
           
   test:
     runs-on: ubuntu-latest
+    needs: build
     steps:
+      - name: Realiza checkout
+        uses: actions/checkout@v4.1.2
+
+      - name: Baixa artefatos
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: MockAPI
+    
       - name: Realiza testes automatizados
         run: |
           dotnet run --project MockAPI/MockAPI.csproj &
